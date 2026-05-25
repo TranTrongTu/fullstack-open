@@ -1,61 +1,30 @@
-const Header = (props) => {
-  return (
-    <h1>{props.course}</h1>
-  )
-}
+const Hello = (props) => {
+  // 1. Hàm hỗ trợ nằm gọn trong bụng Hello
+  const bornYear = () => {
+    const yearNow = new Date().getFullYear()
+    return yearNow - props.age
+  }
 
-const Part = (props) => {
-  return (
-    <p>
-      {props.name} {props.exercises}
-    </p>
-  )
-}
-
-const Content = (props) => {
-  // Accessing array elements using indices [0], [1], [2]
-  return (
-    <>
-      <Part name={props.parts[0].name} exercises={props.parts[0].exercises} />
-      <Part name={props.parts[1].name} exercises={props.parts[1].exercises} />
-      <Part name={props.parts[2].name} exercises={props.parts[2].exercises} />
-    </>
-  )
-}
-
-const Total = (props) => {
-  // Summing up the exercises from each object inside the array
-  return (
-    <p>
-      Number of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}
-    </p>
-  )
-}
-const App = () => {
-  const course = {
-      name: 'Half Stack application development',
-      parts: [
-        {
-          name: 'Fundamentals of React',
-          exercises: 10
-        },
-        {
-          name: 'Using props to pass data',
-          exercises: 7
-        },
-        {
-          name: 'State of a component',
-          exercises: 14
-        }
-      ]
-    }
-
-    // Passing the entire array as a single prop
+  // 2. Hello BẮT BUỘC phải return ra giao diện
+  // Ở đây Hello mới có quyền xài props.name và hàm bornYear()
   return (
     <div>
-      <Header course={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
+      <p>
+        Hello {props.name}, you are {props.age} years old
+      </p>
+      <p>So you were probably born in {bornYear()}</p>
+    </div>
+  )
+}
+
+const App = () => {
+  const name = 'Peter'
+  const age = 10
+
+  // 3. Nhiệm vụ duy nhất của App là truyền dữ liệu (props) xuống cho Hello
+  return (
+    <div>
+      <Hello name={name} age={age} />
     </div>
   )
 }
