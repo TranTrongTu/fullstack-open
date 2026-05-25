@@ -2,7 +2,7 @@ const Hello = (props) => {
   // 1. Hàm hỗ trợ nằm gọn trong bụng Hello
   const bornYear = () => {
     const yearNow = new Date().getFullYear()
-    return yearNow - props.age
+    return yearNow - props.age // hàm con tự động được truy cập vào mọi biến của cha 
   }
 
   // 2. Hello BẮT BUỘC phải return ra giao diện
