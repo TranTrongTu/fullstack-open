@@ -12,42 +12,42 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
    
-  // State to store the index of the currently displayed anecdote
   const [selected, setSelected] = useState(0)
-
-  // NEW: State to store the votes for each anecdote.
-  // Initialize with an array of zeros matching the length of anecdotes array.
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
 
-  // Event handler: Generate a random number
   const handleRandomClick = () => {
     const randomIndex = Math.floor(Math.random() * anecdotes.length)
     setSelected(randomIndex)
   }
 
-  // NEW: Event handler for voting
   const handleVoteClick = () => {
-    // 1. Create a copy of the state array (Immutability rule)
     const newVotes = [...votes]
-    
-    // 2. Increment the vote for the currently displayed anecdote
     newVotes[selected] += 1
-    
-    // 3. Update the state with the new copied array
     setVotes(newVotes)
   }
 
+  // --- NEW LOGIC FOR STEP 3 ---
+  
+  // 1. Find the highest number in the votes array
+  const maxVotes = Math.max(...votes)
+  
+  // 2. Find the index (position) of that highest number
+  const bestAnecdoteIndex = votes.indexOf(maxVotes)
+
   return (
     <div>
+      {/* Section 1: Anecdote of the day */}
+      <h2>Anecdote of the day</h2>
       <p>{anecdotes[selected]}</p>
-      
-      {/* NEW: Display the number of votes for the current anecdote */}
       <p>has {votes[selected]} votes</p>
       
-      {/* NEW: Button to trigger the vote handler */}
       <button onClick={handleVoteClick}>vote</button>
-      
       <button onClick={handleRandomClick}>next anecdote</button>
+
+      {/* Section 2: Anecdote with most votes (NEW) */}
+      <h2>Anecdote with most votes</h2>
+      <p>{anecdotes[bestAnecdoteIndex]}</p>
+      <p>has {maxVotes} votes</p>
     </div>
   )
 }
