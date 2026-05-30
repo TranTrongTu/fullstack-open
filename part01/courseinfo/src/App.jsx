@@ -3,19 +3,22 @@ import { useState } from 'react'
 const App = () => {
   const [left, setLeft] = useState(0)
   const [right, setRight] = useState(0)
+  const [allClicks, setAll] = useState([])
 
-  const [allClicks, setAll] = useState([]) // list stores L, R, L
-
+  const [total, setTotal] = useState(0)
 
   const handleLeftClick = () => {
     setAll(allClicks.concat('L'))
     setLeft(left + 1)
+
+    setTotal(left + right)
   }
 
-
   const handleRightClick = () => {
-    setAll(allClicks.concat('R')) // must use concat to create new a list -> new address
+    setAll(allClicks.concat('R'))
     setRight(right + 1)
+
+    setTotal(left + right)
   }
 
   return (
@@ -24,9 +27,11 @@ const App = () => {
       <button onClick={handleLeftClick}>left</button>
       <button onClick={handleRightClick}>right</button>
       {right}
-      {/*join for rendering: L R L instead of render whole list*/}
-      <p>{allClicks.join(' ')}</p> 
+      <p>{allClicks.join(' ')}</p>
+
+      <p>total {total}</p>
     </div>
   )
 }
+
 export default App
