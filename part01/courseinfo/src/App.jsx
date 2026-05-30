@@ -12,23 +12,41 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
    
-  // variable selected stores the index of currently displayed anecdotes
+  // State to store the index of the currently displayed anecdote
   const [selected, setSelected] = useState(0)
 
-  // Random Event handler function: generate a random number to show new anecdotes
+  // NEW: State to store the votes for each anecdote.
+  // Initialize with an array of zeros matching the length of anecdotes array.
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
+
+  // Event handler: Generate a random number
   const handleRandomClick = () => {
-   
     const randomIndex = Math.floor(Math.random() * anecdotes.length)
+    setSelected(randomIndex)
+  }
+
+  // NEW: Event handler for voting
+  const handleVoteClick = () => {
+    // 1. Create a copy of the state array (Immutability rule)
+    const newVotes = [...votes]
     
-    setSelected(randomIndex) // update the currently displayed anecdotes
+    // 2. Increment the vote for the currently displayed anecdote
+    newVotes[selected] += 1
+    
+    // 3. Update the state with the new copied array
+    setVotes(newVotes)
   }
 
   return (
     <div>
-      {/* Display anecdotes*/}
       <p>{anecdotes[selected]}</p>
       
-      {/*Add new button and click to change current anecdotes*/}
+      {/* NEW: Display the number of votes for the current anecdote */}
+      <p>has {votes[selected]} votes</p>
+      
+      {/* NEW: Button to trigger the vote handler */}
+      <button onClick={handleVoteClick}>vote</button>
+      
       <button onClick={handleRandomClick}>next anecdote</button>
     </div>
   )
