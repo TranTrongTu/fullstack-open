@@ -1,4 +1,9 @@
-// Component for rendering a single part
+import { useState } from 'react'
+
+const Header = ({ courseName }) => {
+  return <h1>{courseName}</h1>
+}
+
 const Part = ({ part }) => {
   return (
     <p>
@@ -7,12 +12,9 @@ const Part = ({ part }) => {
   )
 }
 
-// Component for rendering the list of parts (Dynamic rendering)
 const Content = ({ parts }) => {
   return (
     <div>
-      {/* Loop through the parts array and generate a Part component for each */}
-      {/* CRITICAL: Do not forget the unique 'key' attribute */}
       {parts.map(part => 
         <Part key={part.id} part={part} />
       )}
@@ -20,22 +22,27 @@ const Content = ({ parts }) => {
   )
 }
 
-// Component for the course title
-const Header = ({ courseName }) => {
-  return <h1>{courseName}</h1>
+// NEW COMPONENT: Calculates and displays the total number of exercises
+const Total = ({ parts }) => {
+  // Use the array reduce method to sum up all exercises
+  const totalAmount = parts.reduce((sum, part) => sum + part.exercises, 0)
+
+  return (
+    <p><strong>total of {totalAmount} exercises</strong></p>
+  )
 }
 
-// NEW: The Course component that wraps Header and Content
 const Course = ({ course }) => {
   return (
     <div>
       <Header courseName={course.name} />
       <Content parts={course.parts} />
+      {/* Pass the parts array down to the Total component */}
+      <Total parts={course.parts} />
     </div>
   )
 }
 
-// The root component provided by the exercise
 const App = () => {
   const course = {
     id: 1,
