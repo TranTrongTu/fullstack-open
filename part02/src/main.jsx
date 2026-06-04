@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client'
 import App from './App'
 
+// Kho dữ liệu gốc ban đầu
 const notes = [
   {
     id: 1,
